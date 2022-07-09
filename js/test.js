@@ -14,12 +14,22 @@ const likert_scale_fr = [
     "Pas vraiment d'accord",
     "Ni d'accord ou pas d'accord",
     "Assez d'accord",
-    "Tout à fait d'accord"];
+    "Tout à fait d'accord"
+];
+const likert_scale_en = [
+    "Strongly disagree",
+    "Somewhat disagree",
+    "Neither agree or disagree",
+    "Somewhat agree",
+    "Strongly agree"
+];
 
 // settings & initializers
 
 let lang;
 let test_version;
+let toggleDebug = true;
+let scoring;
 let currentItem = 0;
 
 // scores with main scale
@@ -89,6 +99,15 @@ function refreshQuestions() {
     itemBox.id = "item-" + (currentItem +1);
     itemIndicator.innerHTML = "Item n° " + (currentItem + 1);
     itemContent.innerHTML = ipip_scale_fr[currentItem].content;
+
+    if (toggleDebug) {
+        for (const key in s2_scores_obj) {
+            scoring.innerHTML = key.toString() + " : ";
+            for (const innerKey in s2_scores_obj[key]) {
+                scoring.innerHTML += innerKey.toString() + ":" + s2_scores_obj[key][innerKey] + " ";
+            }
+        }
+    }
 }
 
 // structure
@@ -155,6 +174,23 @@ let main = document.getElementsByTagName( 'main' )[0];
     nextButton.value = 'next';
     main.appendChild(nextButton);
     nextButton.addEventListener('click', nextQuestion);
+
+    if (toggleDebug) {
+        const debugBox = document.createElement('div');
+        debugBox.id = 'debug-box';
+        main.appendChild(debugBox);
+
+        for (const key in s2_scores_obj) {
+            scoring = document.createElement('div');
+            scoring.innerHTML = key.toString() + " : ";
+            for (const innerKey in s2_scores_obj[key]) {
+                scoring.innerHTML += innerKey.toString() + ":" + s2_scores_obj[key][innerKey] + " ";
+            }
+            debugBox.appendChild(scoring);
+        }
+
+
+    }
 
 // NOTES
 // compiler throws a ReferenceError for likertScaleValue when called in refreshQuestions()
