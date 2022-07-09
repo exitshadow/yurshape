@@ -11,38 +11,56 @@
     font-weight: bold;
 }
 
+html {
+    height: 100%;
+    background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
 body {
     padding: 0;
     margin: 0;
     font-family: 'PTMonoRegular';
     font-weight: normal;
     font-size: .7em;
-    background-color: bisque;
+    color: #3d228a9d;
+
+
 }
 
 header {
-    margin: 2em;
+    margin: 2em auto auto auto;
+    width: 80em;
 }
 
 main {
     margin: 5em auto auto auto;
+    width: 80em;
 }
 
 button {
     border-radius: 0;
+    border: 0;
     padding: 8px;
     color: white;
     font-family: 'PTMonoRegular';
 }
 
 button[value='previous'] {
-    background-color: black;
+    background-color: #ff5549;
+    padding-right: 16px;
     padding-left: 16px;
+    border-top-right-radius: 1em ;
+    
 }
 
 button[value='next'] {
-    background-color: black;
-    padding-right: 16px;
+    background-color: #ff5549;
+    width: 5em;
+    height: 5em;
+    padding: 16px;
+    border-radius: 6em;
     float: right;
 }
 
@@ -52,9 +70,11 @@ button[value='next'] {
 
 .item-box {
     display: block;
-    background-color: black;
+    background-color: #ff5549;
     color: white;
     padding: 0px;
+    border-bottom-left-radius: 2em;
+    border-top-right-radius: 2em;
 }
 
 .item-tab, .item-content {
@@ -65,7 +85,9 @@ button[value='next'] {
 
 .item-tab {
     width: 8em;
+    padding-left: 2em;
     text-transform: uppercase;
+
 }
 
 .item-content {
@@ -76,7 +98,9 @@ button[value='next'] {
     padding-top: 18px;
     padding-left: 1em;
     margin-left: 11em;
-    background-color: white;
+    background-color: #f3df9c;
+    border-bottom-right-radius:2em ;
+    border-bottom-left-radius: 2em;
 }
 
 .single-answer-box {
@@ -88,7 +112,7 @@ button[value='next'] {
 
 .results-box {
     width: 70em;
-    margin: 8em auto auto auto;
+    margin: 16em auto auto auto;
 }
 
 .results-box .scale1 {

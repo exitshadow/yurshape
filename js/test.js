@@ -163,6 +163,13 @@ function showResults() {
 
 let main = document.getElementsByTagName( 'main' )[0];
 
+    const prevButton = document.createElement('button');
+    prevButton.type = 'button';
+    prevButton.innerHTML = 'previous';
+    prevButton.value = 'previous'
+    main.appendChild(prevButton);
+    prevButton.addEventListener('click', previousQuestion);
+    
     // main div p .question-item
     // initializing question values at 0 to be replaced later on
     let testBox = document.createElement('div');
@@ -210,12 +217,7 @@ let main = document.getElementsByTagName( 'main' )[0];
             answerBlock.appendChild(likertScaleText);
         }
 
-    const prevButton = document.createElement('button');
-    prevButton.type = 'button';
-    prevButton.innerHTML = 'previous';
-    prevButton.value = 'previous'
-    main.appendChild(prevButton);
-    prevButton.addEventListener('click', previousQuestion);
+    
 
     const nextButton = document.createElement('button');
     nextButton.type = 'button';
