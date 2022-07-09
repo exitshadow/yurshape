@@ -1,0 +1,64 @@
+// ! meant to be used with ipip_items.js or ipip_items_fr.js !
+// the files are separated for legibility
+// always reference the data script before the script
+// (too lazy to write a json function today)
+//
+// let items_fr is declared in the files referenced above
+
+// data
+
+const ipip_scale_fr = items_fr.ipip_scale_fr;
+const bfas_scale_fr = items_fr.bfas_scoring_keys;
+const likert_scale_fr = [
+    "Pas du tout d'accord",
+    "Pas vraiment d'accord",
+    "Ni d'accord ou pas d'accord",
+    "Assez d'accord",
+    "Tout à fait d'accord"];
+
+// structure
+
+let main = document.getElementsByTagName( 'main' )[0];
+
+    // main div p .question-item
+    // initializing question values at 0 to be replaced later on
+
+    let currentItem = 0;
+
+    let itemBox = document.createElement('div');
+    itemBox.id = "item-" + (currentItem + 1);
+    itemBox.className = "item-box";
+
+    let itemIndicator = document.createElement('p');
+    itemIndicator.className = "item-tab";
+    itemIndicator.innerHTML = "Item n° " + (currentItem + 1);
+
+    let itemContent = document.createElement('p');
+    itemContent.innerHTML = ipip_scale_fr[currentItem].content;
+    itemContent.className = "item-content";
+
+    main.appendChild(itemBox);
+    itemBox.appendChild(itemIndicator);
+    itemBox.appendChild(itemContent);
+
+        // laying likert scale answers out
+
+        for (let i = 0; i < likert_scale_fr.length; i++) {
+            const answerBlock = document.createElement('div');
+            answerBlock.className = 'answer-block';
+
+            const likertScaleText = document.createElement('p');
+            likertScaleText.innerHTML = likert_scale_fr[i];
+            likertScaleText.id = "answer-" + (i + 1);
+
+            const likertScaleValue = document.createElement('input');
+            likertScaleValue.type = 'radio';
+            likertScaleValue.value = i + 1;
+
+            itemBox.appendChild(answerBlock);
+            answerBlock.appendChild(likertScaleText);
+            answerBlock.appendChild(likertScaleValue);
+
+            console.log(likertScaleValue);
+        }
+

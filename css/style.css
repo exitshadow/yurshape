@@ -1,0 +1,11 @@
+body {
+    background-color: bisque;
+}
+
+.item-tab, .item-content {
+    display: inline-block;
+}
+
+.answer-block * {
+    display: inline-block;
+}
