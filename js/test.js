@@ -71,6 +71,7 @@ function previousQuestion() {
 function nextQuestion() {
     if (currentItem < ipip_scale_fr.length) {
         currentItem++;
+        registerAnswers();
         refreshQuestions();
     } else {
         console.log('there is no next question');
@@ -83,6 +84,7 @@ function refreshQuestions() {
     itemIndicator.innerHTML = "Item n° " + (currentItem + 1);
     itemContent.innerHTML = ipip_scale_fr[currentItem].content;
 
+    // what comes down doesn't refresh as expected
     if (toggleDebug) {
         for (const key in scores) {
             scoring.innerHTML = key.toString() + " : ";
@@ -93,31 +95,45 @@ function refreshQuestions() {
     }
 }
 
+// this works as expected
 function registerAnswers() {
+    const radioButtons = document.querySelectorAll('input[name="likert"]');
+    console.log(radioButtons);
+ 
+    for (const radioButton of radioButtons) {
+        if (radioButton.checked) {
+            value = radioButton.value;
+            console.log(value);
+            // this works
+        }
+    };
+
     let score;
-    if (scores[currentItem].key) score = value + 1;
+    if (ipip_scale_fr[currentItem].key) score = value;
     else score = likert_scale_en.length - value;
 
-    if (scores[currentItem].scale == 1) {
-        if (scores[currentItem].subscale == 1) scores.extraversion.enthusiasm += score;
-        if (scores[currentItem].subscale == 2) scores.extraversion.assertiveness += score;
+    if (ipip_scale_fr[currentItem].scale == 1) {
+        if (ipip_scale_fr[currentItem].subscale == 1) scores.extraversion.enthusiasm += score;
+        if (ipip_scale_fr[currentItem].subscale == 2) scores.extraversion.assertiveness += score;
 
-    } else if (scores[currentItem].scale == 2) {
-        if (scores[currentItem].subscale == 1) scores.amability.compassion += score;
-        if (scores[currentItem].subscale == 2) scores.amability.politeness += score;
+    } else if (ipip_scale_fr[currentItem].scale == 2) {
+        if (ipip_scale_fr[currentItem].subscale == 1) scores.amability.compassion += score;
+        if (ipip_scale_fr[currentItem].subscale == 2) scores.amability.politeness += score;
 
-    } else if (scores[currentItem].scale == 3) {
-        if (scores[currentItem].subscale == 1) scores.organisation.industriousness += score;
-        if (scores[currentItem].subscale == 2) scores.organisation.orderliness += score;
+    } else if (ipip_scale_fr[currentItem].scale == 3) {
+        if (ipip_scale_fr[currentItem].subscale == 1) scores.organisation.industriousness += score;
+        if (ipip_scale_fr[currentItem].subscale == 2) scores.organisation.orderliness += score;
 
-    } else if (scores[currentItem].scale == 4) {
-        if (scores[currentItem].subscale == 1) scores.neuroticism.volatility += score;
-        if (scores[currentItem].subscale == 2) scores.neuroticism.withdrawal += score;
+    } else if (ipip_scale_fr[currentItem].scale == 4) {
+        if (ipip_scale_fr[currentItem].subscale == 1) scores.neuroticism.volatility += score;
+        if (ipip_scale_fr[currentItem].subscale == 2) scores.neuroticism.withdrawal += score;
 
-    } else if (scores[currentItem].scale == 5) {
-        if (scores[currentItem].subscale == 1) scores.invention.intellect += score;
-        if (scores[currentItem].subscale == 2) scores.invention.imagination += score;
+    } else if (ipip_scale_fr[currentItem].scale == 5) {
+        if (ipip_scale_fr[currentItem].subscale == 1) scores.invention.intellect += score;
+        if (ipip_scale_fr[currentItem].subscale == 2) scores.invention.imagination += score;
     }
+
+    console.log(scores);
 }
 
 // structure
@@ -167,9 +183,8 @@ let main = document.getElementsByTagName( 'main' )[0];
             answersDiv.appendChild(answerBlock);
             answerBlock.appendChild(likertScaleValue);
             answerBlock.appendChild(likertScaleText);
-
-            console.log(likertScaleValue);
         }
+  
     
     const prevButton = document.createElement('button');
     prevButton.type = 'button';
