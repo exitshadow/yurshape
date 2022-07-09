@@ -28,7 +28,6 @@ const likert_scale_en = [
 
 let lang;
 let test_version;
-let toggleDebug = true;
 let scoring;
 let currentItem = 0;
 let value;
@@ -69,13 +68,13 @@ function previousQuestion() {
 }
 
 function nextQuestion() {
-    if (currentItem < ipip_scale_fr.length) {
+    if (currentItem < ipip_scale_fr.length - 1) {
         currentItem++;
         submitAnswer();
         refreshQuestions();
     } else {
         console.log('there is no next question');
-        // show end of quizz
+        showResults();
     }
 }
 
@@ -83,16 +82,6 @@ function refreshQuestions() {
     itemBox.id = "item-" + (currentItem +1);
     itemIndicator.innerHTML = "Item n° " + (currentItem + 1);
     itemContent.innerHTML = ipip_scale_fr[currentItem].content;
-
-    // what comes down doesn't refresh as expected
-    if (toggleDebug) {
-        for (const key in scores) {
-            scoring.innerHTML = key.toString() + " : ";
-            for (const innerKey in scores[key]) {
-                scoring.innerHTML += innerKey.toString() + ":" + scores[key][innerKey] + " ";
-            }
-        }
-    }
 }
 
 // this works as expected
@@ -102,7 +91,7 @@ function submitAnswer() {
  
     for (const radioButton of radioButtons) {
         if (radioButton.checked) {
-            value = radioButton.value;
+            value = Number(radioButton.value);
             console.log(value);
             // this works
         }
@@ -134,6 +123,21 @@ function submitAnswer() {
     }
 
     console.log(scores);
+}
+
+function showResults() {
+    const results = document.createElement('div');
+        results.id = 'debug-box';
+        main.appendChild(results);
+
+        for (const key in scores) {
+            scoring = document.createElement('div');
+            scoring.innerHTML = key.toString() + " : ";
+            for (const innerKey in scores[key]) {
+                scoring.innerHTML += innerKey.toString() + ":" + scores[key][innerKey] + " ";
+            }
+            results.appendChild(scoring);
+        }
 }
 
 // structure
@@ -200,22 +204,7 @@ let main = document.getElementsByTagName( 'main' )[0];
     main.appendChild(nextButton);
     nextButton.addEventListener('click', nextQuestion);
 
-    if (toggleDebug) {
-        const debugBox = document.createElement('div');
-        debugBox.id = 'debug-box';
-        main.appendChild(debugBox);
-
-        for (const key in scores) {
-            scoring = document.createElement('div');
-            scoring.innerHTML = key.toString() + " : ";
-            for (const innerKey in scores[key]) {
-                scoring.innerHTML += innerKey.toString() + ":" + scores[key][innerKey] + " ";
-            }
-            debugBox.appendChild(scoring);
-        }
-
-
-    }
+    // showResults();
 
 // NOTES
 // compiler throws a ReferenceError for likertScaleValue when called in refreshQuestions()
