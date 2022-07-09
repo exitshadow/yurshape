@@ -16,10 +16,38 @@ const likert_scale_fr = [
     "Assez d'accord",
     "Tout à fait d'accord"];
 
-// settings
+// settings & initializers
 
 let lang;
 let test_version;
+let currentItem = 0;
+
+// functions
+
+function previousQuestion() {
+    if (currentItem > 0) {
+        currentItem--;
+        refreshQuestions();
+    } else {
+        console.log('there is no previous question...')
+    }
+}
+
+function nextQuestion() {
+    if (currentItem < ipip_scale_fr.length) {
+        currentItem++;
+        refreshQuestions();
+    } else {
+        console.log('there is no next question');
+        // show end of quizz
+    }
+}
+
+function refreshQuestions() {
+    itemBox.id = "item-" + (currentItem +1);
+    itemIndicator.innerHTML = "Item n° " + (currentItem + 1);
+    itemContent.innerHTML = ipip_scale_fr[currentItem].content;
+}
 
 // structure
 
@@ -28,7 +56,6 @@ let main = document.getElementsByTagName( 'main' )[0];
     // main div p .question-item
     // initializing question values at 0 to be replaced later on
 
-    let currentItem = 0;
 
     let itemBox = document.createElement('div');
     itemBox.id = "item-" + (currentItem + 1);
@@ -63,7 +90,7 @@ let main = document.getElementsByTagName( 'main' )[0];
 
             const likertScaleValue = document.createElement('input');
             likertScaleValue.type = 'radio';
-            likertScaleValue.name = 'item-' + (currentItem + 1) + " value";
+            // likertScaleValue.name = 'item-' + (currentItem + 1) + " value"; // useless
             likertScaleValue.value = i + 1;
 
             answersDiv.appendChild(answerBlock);
@@ -78,10 +105,15 @@ let main = document.getElementsByTagName( 'main' )[0];
     prevButton.innerHTML = 'previous';
     prevButton.value = 'previous'
     main.appendChild(prevButton);
+    prevButton.addEventListener('click', previousQuestion);
 
     const nextButton = document.createElement('button');
     nextButton.type = 'button';
     nextButton.innerHTML = 'next';
     nextButton.value = 'next';
     main.appendChild(nextButton);
+    nextButton.addEventListener('click', nextQuestion);
 
+// NOTES
+// compiler throws a ReferenceError for likertScaleValue when called in refreshQuestions()
+// why does it do it for likertScaleValue but not for likertScaleText?
