@@ -31,9 +31,10 @@ let test_version;
 let toggleDebug = true;
 let scoring;
 let currentItem = 0;
+let value;
 
 // scores with subscales represented by attributes
-let s2_scores_obj = {
+let scores = {
     "extraversion" :{
         "enthusiasm" : 0,
         "assertiveness" : 0
@@ -83,12 +84,39 @@ function refreshQuestions() {
     itemContent.innerHTML = ipip_scale_fr[currentItem].content;
 
     if (toggleDebug) {
-        for (const key in s2_scores_obj) {
+        for (const key in scores) {
             scoring.innerHTML = key.toString() + " : ";
-            for (const innerKey in s2_scores_obj[key]) {
-                scoring.innerHTML += innerKey.toString() + ":" + s2_scores_obj[key][innerKey] + " ";
+            for (const innerKey in scores[key]) {
+                scoring.innerHTML += innerKey.toString() + ":" + scores[key][innerKey] + " ";
             }
         }
+    }
+}
+
+function registerAnswers() {
+    let score;
+    if (scores[currentItem].key) score = value + 1;
+    else score = likert_scale_en.length - value;
+
+    if (scores[currentItem].scale == 1) {
+        if (scores[currentItem].subscale == 1) scores.extraversion.enthusiasm += score;
+        if (scores[currentItem].subscale == 2) scores.extraversion.assertiveness += score;
+
+    } else if (scores[currentItem].scale == 2) {
+        if (scores[currentItem].subscale == 1) scores.amability.compassion += score;
+        if (scores[currentItem].subscale == 2) scores.amability.politeness += score;
+
+    } else if (scores[currentItem].scale == 3) {
+        if (scores[currentItem].subscale == 1) scores.organisation.industriousness += score;
+        if (scores[currentItem].subscale == 2) scores.organisation.orderliness += score;
+
+    } else if (scores[currentItem].scale == 4) {
+        if (scores[currentItem].subscale == 1) scores.neuroticism.volatility += score;
+        if (scores[currentItem].subscale == 2) scores.neuroticism.withdrawal += score;
+
+    } else if (scores[currentItem].scale == 5) {
+        if (scores[currentItem].subscale == 1) scores.invention.intellect += score;
+        if (scores[currentItem].subscale == 2) scores.invention.imagination += score;
     }
 }
 
@@ -162,11 +190,11 @@ let main = document.getElementsByTagName( 'main' )[0];
         debugBox.id = 'debug-box';
         main.appendChild(debugBox);
 
-        for (const key in s2_scores_obj) {
+        for (const key in scores) {
             scoring = document.createElement('div');
             scoring.innerHTML = key.toString() + " : ";
-            for (const innerKey in s2_scores_obj[key]) {
-                scoring.innerHTML += innerKey.toString() + ":" + s2_scores_obj[key][innerKey] + " ";
+            for (const innerKey in scores[key]) {
+                scoring.innerHTML += innerKey.toString() + ":" + scores[key][innerKey] + " ";
             }
             debugBox.appendChild(scoring);
         }
