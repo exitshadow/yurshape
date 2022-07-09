@@ -71,7 +71,7 @@ function previousQuestion() {
 function nextQuestion() {
     if (currentItem < ipip_scale_fr.length) {
         currentItem++;
-        registerAnswers();
+        submitAnswer();
         refreshQuestions();
     } else {
         console.log('there is no next question');
@@ -96,7 +96,7 @@ function refreshQuestions() {
 }
 
 // this works as expected
-function registerAnswers() {
+function submitAnswer() {
     const radioButtons = document.querySelectorAll('input[name="likert"]');
     console.log(radioButtons);
  
