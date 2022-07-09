@@ -28,7 +28,7 @@ const likert_scale_en = [
 
 let lang;
 let test_version;
-let scoring;
+let results_scale2;
 let currentItem = 0;
 let value;
 
@@ -127,16 +127,35 @@ function submitAnswer() {
 
 function showResults() {
     const results = document.createElement('div');
-        results.id = 'debug-box';
+        results.id = 'results-box';
         main.appendChild(results);
 
+        // show dominant trait
+        // sort by score
+
+        scores.extraversion.totalScore = scores.extraversion.enthusiasm + scores.extraversion.assertiveness;
+
+        scores.amability.totalScore = scores.amability.compassion + scores.amability.politeness;
+
+        scores.organisation.totalScore = scores.organisation.industriousness + scores.organisation.orderliness;
+
+        scores.neuroticism.totalScore = scores.neuroticism.volatility + scores.neuroticism.volatility;
+
+        scores.invention.totalScore = scores.invention.intellect + scores.invention.imagination;
+
         for (const key in scores) {
-            scoring = document.createElement('div');
-            scoring.innerHTML = key.toString() + " : ";
+            const results_scale1 = document.createElement('div');
+            results_scale1.innerHTML = key.toString() + " : " + scores[key].totalScore;
+            results_scale1.className = 'results-scale1';
+            results.appendChild(results_scale1);
             for (const innerKey in scores[key]) {
-                scoring.innerHTML += innerKey.toString() + ":" + scores[key][innerKey] + " ";
+                if (innerKey != 'totalScore') {
+                    results_scale2 = document.createElement('div');
+                    results_scale2.innerHTML = innerKey.toString() + " : " + scores[key][innerKey] + " ";
+                    results_scale2.className = 'results-scale2';
+                    results_scale1.appendChild(results_scale2);
+                }
             }
-            results.appendChild(scoring);
         }
 }
 
@@ -204,7 +223,7 @@ let main = document.getElementsByTagName( 'main' )[0];
     main.appendChild(nextButton);
     nextButton.addEventListener('click', nextQuestion);
 
-    // showResults();
+     showResults();
 
 // NOTES
 // compiler throws a ReferenceError for likertScaleValue when called in refreshQuestions()
