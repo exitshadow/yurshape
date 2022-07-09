@@ -12,43 +12,75 @@
 }
 
 body {
+    padding: 0;
+    margin: 0;
     font-family: 'PTMonoRegular';
     font-weight: normal;
     font-size: .7em;
     background-color: bisque;
 }
 
+header {
+    margin: 2em;
+}
+
 main {
     margin: 5em auto auto auto;
 }
 
+button {
+    border-radius: 0;
+    padding: 8px;
+    color: white;
+    font-family: 'PTMonoRegular';
+}
+
 button[value='previous'] {
-    color: red;
+    background-color: black;
+    padding-left: 16px;
 }
 
 button[value='next'] {
-    color: blue;
+    background-color: black;
+    padding-right: 16px;
+    float: right;
+}
+
+.test-box {
+    margin: auto auto 3em auto;
 }
 
 .item-box {
     display: block;
-    /*background-color: red;*/
-}
-
-.item-tab {
-    width: 10em;
+    background-color: black;
+    color: white;
+    padding: 0px;
 }
 
 .item-tab, .item-content {
     display: inline-block;
+    margin: 0;
+    padding: 1em;
+}
+
+.item-tab {
+    width: 8em;
+    text-transform: uppercase;
+}
+
+.item-content {
+    font-size: 1.2em;
 }
 
 .answers-box {
-    margin-left: 10em;
+    padding-top: 18px;
+    padding-left: 1em;
+    margin-left: 11em;
+    background-color: white;
 }
 
 .single-answer-box {
-    width: 10em;
+    width: 12em;
     display: inline-block;
     text-align: center;
     vertical-align: top;
@@ -56,7 +88,7 @@ button[value='next'] {
 
 .results-box {
     width: 70em;
-    margin: 3em auto auto auto;
+    margin: 8em auto auto auto;
 }
 
 .results-box .scale1 {

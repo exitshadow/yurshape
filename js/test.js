@@ -165,14 +165,10 @@ let main = document.getElementsByTagName( 'main' )[0];
 
     // main div p .question-item
     // initializing question values at 0 to be replaced later on
+    let testBox = document.createElement('div');
+    testBox.className = 'test-box';
+    main.appendChild(testBox);
 
-    const prevButton = document.createElement('button');
-    prevButton.type = 'button';
-    prevButton.innerHTML = 'previous';
-    prevButton.value = 'previous'
-    main.appendChild(prevButton);
-    prevButton.addEventListener('click', previousQuestion);
-    
     let itemBox = document.createElement('div');
     itemBox.id = "item-" + (currentItem + 1);
     itemBox.className = "item-box";
@@ -185,11 +181,11 @@ let main = document.getElementsByTagName( 'main' )[0];
     itemContent.innerHTML = ipip_scale_fr[currentItem].content;
     itemContent.className = "item-content";
 
-    let answersDiv = document.createElement('div');
-    answersDiv.className = 'answers-box';
+    let answersBox = document.createElement('div');
+    answersBox.className = 'answers-box';
 
-    main.appendChild(itemBox);
-    main.appendChild(answersDiv);
+    testBox.appendChild(itemBox);
+    testBox.appendChild(answersBox);
     itemBox.appendChild(itemIndicator);
     itemBox.appendChild(itemContent);
 
@@ -209,10 +205,17 @@ let main = document.getElementsByTagName( 'main' )[0];
             likertScaleValue.name = 'likert';
             likertScaleValue.value = i + 1;
 
-            answersDiv.appendChild(answerBlock);
+            answersBox.appendChild(answerBlock);
             answerBlock.appendChild(likertScaleValue);
             answerBlock.appendChild(likertScaleText);
         }
+
+    const prevButton = document.createElement('button');
+    prevButton.type = 'button';
+    prevButton.innerHTML = 'previous';
+    prevButton.value = 'previous'
+    main.appendChild(prevButton);
+    prevButton.addEventListener('click', previousQuestion);
 
     const nextButton = document.createElement('button');
     nextButton.type = 'button';
