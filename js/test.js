@@ -22,6 +22,48 @@ let lang;
 let test_version;
 let currentItem = 0;
 
+// scores with main scale
+let s1_scores = {
+    "extraversion" : 0,
+    "amability" : 0,
+    "organisation" : 0,
+    "neuroticism" : 0,
+    "invention" : 0
+}
+
+// scores with subscales represented by arrays
+let s2_scores_arr = {
+    "extraversion" : [0,0],
+    "amability" : [0,0],
+    "organisation" : [0,0],
+    "neuroticism" : [0,0],
+    "invention" : [0,0]
+}
+
+// scores with subscales represented by attributes
+let s2_scores_obj = {
+    "extraversion" :{
+        "enthusiasm" : 0,
+        "assertiveness" : 0
+        },
+    "amability" : {
+        "compassion" : 0,
+        "politeness" : 0,
+    },
+    "organisation" : {
+        "industriousness" : 0,
+        "orderliness" : 0,
+    },
+    "neuroticism" : {
+        "volatility" : 0,
+        "withdrawal" : 0,
+    },
+    "invention" : {
+        "intellect" : 0,
+        "imagination" : 0
+    }
+}
+
 // functions
 
 function previousQuestion() {
