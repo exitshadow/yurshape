@@ -14,7 +14,12 @@
 body {
     font-family: 'PTMonoRegular';
     font-weight: normal;
+    font-size: .7em;
     background-color: bisque;
+}
+
+main {
+    margin: 5em auto auto auto;
 }
 
 button[value='previous'] {
@@ -47,4 +52,20 @@ button[value='next'] {
     display: inline-block;
     text-align: center;
     vertical-align: top;
+}
+
+.results-box {
+    width: 70em;
+    margin: 3em auto auto auto;
+}
+
+.results-box .scale1 {
+    width: 12em;
+    margin-right: 2em;
+    display: inline-block;
+    font-weight: bold;
+}
+
+.results-box .scale2 {
+    font-weight: normal;
 }

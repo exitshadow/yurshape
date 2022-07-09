@@ -28,7 +28,7 @@ const likert_scale_en = [
 
 let lang;
 let test_version;
-let results_scale2;
+let scale2;
 let currentItem = 0;
 let value;
 
@@ -127,36 +127,36 @@ function submitAnswer() {
 
 function showResults() {
     const results = document.createElement('div');
-        results.id = 'results-box';
-        main.appendChild(results);
+    results.className = 'results-box';
+    main.appendChild(results);
 
-        // show dominant trait
-        // sort by score
+    // show dominant trait
+    // sort by score
 
-        scores.extraversion.totalScore = scores.extraversion.enthusiasm + scores.extraversion.assertiveness;
+    scores.extraversion.totalScore = scores.extraversion.enthusiasm + scores.extraversion.assertiveness;
 
-        scores.amability.totalScore = scores.amability.compassion + scores.amability.politeness;
+    scores.amability.totalScore = scores.amability.compassion + scores.amability.politeness;
 
-        scores.organisation.totalScore = scores.organisation.industriousness + scores.organisation.orderliness;
+    scores.organisation.totalScore = scores.organisation.industriousness + scores.organisation.orderliness;
 
-        scores.neuroticism.totalScore = scores.neuroticism.volatility + scores.neuroticism.volatility;
+    scores.neuroticism.totalScore = scores.neuroticism.volatility + scores.neuroticism.volatility;
 
-        scores.invention.totalScore = scores.invention.intellect + scores.invention.imagination;
+    scores.invention.totalScore = scores.invention.intellect + scores.invention.imagination;
 
-        for (const key in scores) {
-            const results_scale1 = document.createElement('div');
-            results_scale1.innerHTML = key.toString() + " : " + scores[key].totalScore;
-            results_scale1.className = 'results-scale1';
-            results.appendChild(results_scale1);
-            for (const innerKey in scores[key]) {
-                if (innerKey != 'totalScore') {
-                    results_scale2 = document.createElement('div');
-                    results_scale2.innerHTML = innerKey.toString() + " : " + scores[key][innerKey] + " ";
-                    results_scale2.className = 'results-scale2';
-                    results_scale1.appendChild(results_scale2);
-                }
+    for (const key in scores) {
+        const scale1 = document.createElement('div');
+        scale1.innerHTML = key.toString() + " : " + scores[key].totalScore;
+        scale1.className = 'scale1';
+        results.appendChild(scale1);
+        for (const innerKey in scores[key]) {
+            if (innerKey != 'totalScore') {
+                scale2 = document.createElement('div');
+                scale2.innerHTML = innerKey.toString() + " : " + scores[key][innerKey] + " ";
+                scale2.className = 'scale2';
+                scale1.appendChild(scale2);
             }
         }
+    }
 }
 
 // structure
@@ -166,7 +166,13 @@ let main = document.getElementsByTagName( 'main' )[0];
     // main div p .question-item
     // initializing question values at 0 to be replaced later on
 
-
+    const prevButton = document.createElement('button');
+    prevButton.type = 'button';
+    prevButton.innerHTML = 'previous';
+    prevButton.value = 'previous'
+    main.appendChild(prevButton);
+    prevButton.addEventListener('click', previousQuestion);
+    
     let itemBox = document.createElement('div');
     itemBox.id = "item-" + (currentItem + 1);
     itemBox.className = "item-box";
@@ -207,14 +213,6 @@ let main = document.getElementsByTagName( 'main' )[0];
             answerBlock.appendChild(likertScaleValue);
             answerBlock.appendChild(likertScaleText);
         }
-  
-    
-    const prevButton = document.createElement('button');
-    prevButton.type = 'button';
-    prevButton.innerHTML = 'previous';
-    prevButton.value = 'previous'
-    main.appendChild(prevButton);
-    prevButton.addEventListener('click', previousQuestion);
 
     const nextButton = document.createElement('button');
     nextButton.type = 'button';
