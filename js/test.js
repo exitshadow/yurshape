@@ -16,6 +16,11 @@ const likert_scale_fr = [
     "Assez d'accord",
     "Tout à fait d'accord"];
 
+// settings
+
+let lang;
+let test_version;
+
 // structure
 
 let main = document.getElementsByTagName( 'main' )[0];
