@@ -37,15 +37,20 @@ let main = document.getElementsByTagName( 'main' )[0];
     itemContent.innerHTML = ipip_scale_fr[currentItem].content;
     itemContent.className = "item-content";
 
+    let answersDiv = document.createElement('div');
+    answersDiv.className = 'answers-box';
+
     main.appendChild(itemBox);
+    main.appendChild(answersDiv);
     itemBox.appendChild(itemIndicator);
     itemBox.appendChild(itemContent);
+
 
         // laying likert scale answers out
 
         for (let i = 0; i < likert_scale_fr.length; i++) {
             const answerBlock = document.createElement('div');
-            answerBlock.className = 'answer-block';
+            answerBlock.className = 'single-answer-box';
 
             const likertScaleText = document.createElement('p');
             likertScaleText.innerHTML = likert_scale_fr[i];
@@ -53,12 +58,25 @@ let main = document.getElementsByTagName( 'main' )[0];
 
             const likertScaleValue = document.createElement('input');
             likertScaleValue.type = 'radio';
+            likertScaleValue.name = 'item-' + (currentItem + 1) + " value";
             likertScaleValue.value = i + 1;
 
-            itemBox.appendChild(answerBlock);
-            answerBlock.appendChild(likertScaleText);
+            answersDiv.appendChild(answerBlock);
             answerBlock.appendChild(likertScaleValue);
+            answerBlock.appendChild(likertScaleText);
 
             console.log(likertScaleValue);
         }
+    
+    const prevButton = document.createElement('button');
+    prevButton.type = 'button';
+    prevButton.innerHTML = 'previous';
+    prevButton.value = 'previous'
+    main.appendChild(prevButton);
+
+    const nextButton = document.createElement('button');
+    nextButton.type = 'button';
+    nextButton.innerHTML = 'next';
+    nextButton.value = 'next';
+    main.appendChild(nextButton);
 

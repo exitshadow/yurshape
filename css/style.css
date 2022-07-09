@@ -1,11 +1,51 @@
+@font-face {
+    font-family: 'PTMonoRegular';
+    src: url('../fonts/PTM55F.woff')
+    format('woff');
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'PTMonoRegular';
+    src: url('../fonts/PTM75F.woff');
+    font-weight: bold;
+}
+
 body {
+    font-family: 'PTMonoRegular';
+    font-weight: normal;
     background-color: bisque;
+}
+
+button[value='previous'] {
+    color: red;
+}
+
+button[value='next'] {
+    color: blue;
+}
+
+.item-box {
+    display: block;
+    /*background-color: red;*/
+}
+
+.item-tab {
+    width: 10em;
 }
 
 .item-tab, .item-content {
     display: inline-block;
 }
 
-.answer-block * {
+.answers-box {
+    margin-left: 10em;
+}
+
+.single-answer-box {
+    width: 10em;
     display: inline-block;
+    text-align: center;
+    vertical-align: top;
+    background-color: blueviolet;
 }
