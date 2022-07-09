@@ -32,24 +32,6 @@ let toggleDebug = true;
 let scoring;
 let currentItem = 0;
 
-// scores with main scale
-let s1_scores = {
-    "extraversion" : 0,
-    "amability" : 0,
-    "organisation" : 0,
-    "neuroticism" : 0,
-    "invention" : 0
-}
-
-// scores with subscales represented by arrays
-let s2_scores_arr = {
-    "extraversion" : [0,0],
-    "amability" : [0,0],
-    "organisation" : [0,0],
-    "neuroticism" : [0,0],
-    "invention" : [0,0]
-}
-
 // scores with subscales represented by attributes
 let s2_scores_obj = {
     "extraversion" :{
@@ -151,7 +133,7 @@ let main = document.getElementsByTagName( 'main' )[0];
 
             const likertScaleValue = document.createElement('input');
             likertScaleValue.type = 'radio';
-            // likertScaleValue.name = 'item-' + (currentItem + 1) + " value"; // useless
+            likertScaleValue.name = 'likert';
             likertScaleValue.value = i + 1;
 
             answersDiv.appendChild(answerBlock);
