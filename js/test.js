@@ -32,6 +32,7 @@ let test_version;
 let scale2;
 let currentItem = 0;
 let value;
+let isChecked = false;
 
 // scores with subscales represented by attributes
 let scores = {
@@ -75,7 +76,7 @@ function nextQuestion() {
         refreshQuestions();
     } else {
         console.log('there is no next question');
-        showResults();
+        if(!isChecked) showResults();
     }
 }
 
@@ -168,7 +169,6 @@ function showResults() {
         }
     }
 
-    let isChecked = false;
     let dominantTrait;
     let dominantTraitBox;
     // this is a bit strange, without the stopping boolean it
