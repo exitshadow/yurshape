@@ -38,7 +38,7 @@ body {
 }
 
 header {
-    margin: 2em auto auto 2em;
+    margin: 2em auto auto auto;
     width: 80em;
 }
 
@@ -139,6 +139,7 @@ button[value='next'] {
 
 .answers-box {
     padding-top: 18px;
+    padding-left: 1em;
     margin-left: 11em;
     background-color: #f3df9c;
     border-bottom-right-radius:2em ;
