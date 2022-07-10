@@ -23,7 +23,7 @@ const likert_scale_en = [
     "Somewhat agree",
     "Strongly agree"
 ];
-const results_desc_fr = ocean_desc_fr;
+const results_desc = ocean_desc_fr;
 
 // settings & initializers
 
@@ -132,8 +132,11 @@ function showResults() {
     results.className = 'results-box';
     main.appendChild(results);
 
-    const shaderCanvas = document.createElement('canvas');
-    results.appendChild(shaderCanvas);
+    const glCanvas = document.createElement('canvas');
+    glCanvas.id = 'glCanvas';
+    glCanvas.width = '600';
+    glCanvas.height = '600';
+    results.appendChild(glCanvas);
 
     const resultsTitle = document.createElement('h2');
     resultsTitle.innerHTML = 'your results';
@@ -186,10 +189,10 @@ function showResults() {
         }
     }
 
-    for (const key in results_desc_fr) {
+    for (const key in results_desc) {
         if (key == dominantTrait) {
             const dominantDesc = document.createElement('p');
-            dominantDesc.innerHTML = results_desc_fr[key];
+            dominantDesc.innerHTML = results_desc[key];
             dominantTraitBox.appendChild(dominantDesc);
         }
     }
