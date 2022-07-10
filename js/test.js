@@ -39,11 +39,11 @@ let scores = {
         "enthusiasm" : 0,
         "assertiveness" : 0
         },
-    "amability" : {
+    "agreeableness" : {
         "compassion" : 0,
         "politeness" : 0,
     },
-    "organisation" : {
+    "consciousness" : {
         "industriousness" : 0,
         "orderliness" : 0,
     },
@@ -51,7 +51,7 @@ let scores = {
         "volatility" : 0,
         "withdrawal" : 0,
     },
-    "invention" : {
+    "openness" : {
         "intellect" : 0,
         "imagination" : 0
     }
@@ -107,20 +107,20 @@ function submitAnswer() {
         if (ipip_scale_fr[currentItem].subscale == 2) scores.extraversion.assertiveness += score;
 
     } else if (ipip_scale_fr[currentItem].scale == 2) {
-        if (ipip_scale_fr[currentItem].subscale == 1) scores.amability.compassion += score;
-        if (ipip_scale_fr[currentItem].subscale == 2) scores.amability.politeness += score;
+        if (ipip_scale_fr[currentItem].subscale == 1) scores.agreeableness.compassion += score;
+        if (ipip_scale_fr[currentItem].subscale == 2) scores.agreeableness.politeness += score;
 
     } else if (ipip_scale_fr[currentItem].scale == 3) {
-        if (ipip_scale_fr[currentItem].subscale == 1) scores.organisation.industriousness += score;
-        if (ipip_scale_fr[currentItem].subscale == 2) scores.organisation.orderliness += score;
+        if (ipip_scale_fr[currentItem].subscale == 1) scores.consciousness.industriousness += score;
+        if (ipip_scale_fr[currentItem].subscale == 2) scores.consciousness.orderliness += score;
 
     } else if (ipip_scale_fr[currentItem].scale == 4) {
         if (ipip_scale_fr[currentItem].subscale == 1) scores.neuroticism.volatility += score;
         if (ipip_scale_fr[currentItem].subscale == 2) scores.neuroticism.withdrawal += score;
 
     } else if (ipip_scale_fr[currentItem].scale == 5) {
-        if (ipip_scale_fr[currentItem].subscale == 1) scores.invention.intellect += score;
-        if (ipip_scale_fr[currentItem].subscale == 2) scores.invention.imagination += score;
+        if (ipip_scale_fr[currentItem].subscale == 1) scores.openness.intellect += score;
+        if (ipip_scale_fr[currentItem].subscale == 2) scores.openness.imagination += score;
     }
 
     console.log(scores);
@@ -144,17 +144,17 @@ function showResults() {
     scores.extraversion.totalScore =
     scores.extraversion.enthusiasm + scores.extraversion.assertiveness;
 
-    scores.amability.totalScore =
-    scores.amability.compassion + scores.amability.politeness;
+    scores.agreeableness.totalScore =
+    scores.agreeableness.compassion + scores.agreeableness.politeness;
 
-    scores.organisation.totalScore =
-    scores.organisation.industriousness + scores.organisation.orderliness;
+    scores.consciousness.totalScore =
+    scores.consciousness.industriousness + scores.consciousness.orderliness;
 
     scores.neuroticism.totalScore =
     scores.neuroticism.volatility + scores.neuroticism.volatility;
 
-    scores.invention.totalScore =
-    scores.invention.intellect + scores.invention.imagination;
+    scores.openness.totalScore =
+    scores.openness.intellect + scores.openness.imagination;
 
     // set highest score
     let highestScore = 0;
@@ -169,17 +169,28 @@ function showResults() {
     }
 
     let isChecked = false;
+    let dominantTrait;
+    let dominantTraitBox;
     // this is a bit strange, without the stopping boolean it
     // checks the equality 3 times ?!
     for (const key in scores) {
         for (const innerKey in scores[key]) {
             console.log(scores[key].totalScore);
             if (highestScore == scores[key].totalScore && !isChecked) {
-                const dominantTraitBox = document.createElement('div');
+                dominantTrait = key;
+                dominantTraitBox = document.createElement('div');
                 dominantTraitBox.innerHTML = `your dominant trait is ${key.toString()}`;
                 results.appendChild(dominantTraitBox);
                 isChecked = true;
             }
+        }
+    }
+
+    for (const key in results_desc_fr) {
+        if (key == dominantTrait) {
+            const dominantDesc = document.createElement('p');
+            dominantDesc.innerHTML = results_desc_fr[key];
+            dominantTraitBox.appendChild(dominantDesc);
         }
     }
 
