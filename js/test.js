@@ -183,6 +183,7 @@ function showResults() {
                 dominantTrait = key;
                 dominantTraitBox = document.createElement('div');
                 dominantTraitBox.innerHTML = `your dominant trait is ${key.toString()}`;
+                dominantTraitBox.className = 'dominant-trait-desc';
                 results.appendChild(dominantTraitBox);
                 isChecked = true;
             }

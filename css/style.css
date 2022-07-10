@@ -184,11 +184,15 @@ button[value='next'] {
 }*/
 
 .results-box {
-    width: 70em;
-    margin: 16em auto auto auto;
-    padding: 2em;
+    width: 60em;
+    margin: 16em auto 8em auto;
+    padding: 2em 6em 6em 6em;
     background-color: #f3df9c;
     border-radius: 2em;
+}
+
+.results-box .dominant-trait-desc {
+    margin-bottom: 2em;
 }
 
 .results-box h2 {
@@ -199,7 +203,7 @@ button[value='next'] {
     display: block;
     background-color: #7b2ea8;
     clear: both;
-    margin: auto;
+    margin: auto auto -10em auto;
     width: 25em;
     height: 25em;
     border-radius: 50%;
