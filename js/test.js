@@ -23,6 +23,7 @@ const likert_scale_en = [
     "Somewhat agree",
     "Strongly agree"
 ];
+const results_desc_fr = ocean_desc_fr;
 
 // settings & initializers
 
@@ -130,19 +131,59 @@ function showResults() {
     results.className = 'results-box';
     main.appendChild(results);
 
+    const shaderCanvas = document.createElement('canvas');
+    results.appendChild(shaderCanvas);
+
+    const resultsTitle = document.createElement('h2');
+    resultsTitle.innerHTML = 'your results';
+    results.appendChild(resultsTitle);
+
     // show dominant trait
     // sort by score
 
-    scores.extraversion.totalScore = scores.extraversion.enthusiasm + scores.extraversion.assertiveness;
+    scores.extraversion.totalScore =
+    scores.extraversion.enthusiasm + scores.extraversion.assertiveness;
 
-    scores.amability.totalScore = scores.amability.compassion + scores.amability.politeness;
+    scores.amability.totalScore =
+    scores.amability.compassion + scores.amability.politeness;
 
-    scores.organisation.totalScore = scores.organisation.industriousness + scores.organisation.orderliness;
+    scores.organisation.totalScore =
+    scores.organisation.industriousness + scores.organisation.orderliness;
 
-    scores.neuroticism.totalScore = scores.neuroticism.volatility + scores.neuroticism.volatility;
+    scores.neuroticism.totalScore =
+    scores.neuroticism.volatility + scores.neuroticism.volatility;
 
-    scores.invention.totalScore = scores.invention.intellect + scores.invention.imagination;
+    scores.invention.totalScore =
+    scores.invention.intellect + scores.invention.imagination;
 
+    // set highest score
+    let highestScore = 0;
+    for (const key in scores) {
+        for (const innerKey in scores[key]) {
+            if (innerKey == 'totalScore') {
+                if (scores[key][innerKey] > highestScore) {
+                    highestScore = scores[key][innerKey]
+                }
+            }
+        }
+    }
+
+    let isChecked = false;
+    // this is a bit strange, without the stopping boolean it
+    // checks the equality 3 times ?!
+    for (const key in scores) {
+        for (const innerKey in scores[key]) {
+            console.log(scores[key].totalScore);
+            if (highestScore == scores[key].totalScore && !isChecked) {
+                const dominantTraitBox = document.createElement('div');
+                dominantTraitBox.innerHTML = `your dominant trait is ${key.toString()}`;
+                results.appendChild(dominantTraitBox);
+                isChecked = true;
+            }
+        }
+    }
+
+    // display details
     for (const key in scores) {
         const scale1 = document.createElement('div');
         scale1.innerHTML = key.toString() + " : " + scores[key].totalScore;
@@ -169,7 +210,7 @@ let main = document.getElementsByTagName( 'main' )[0];
     prevButton.value = 'previous'
     main.appendChild(prevButton);
     prevButton.addEventListener('click', previousQuestion);
-    
+
     // main div p .question-item
     // initializing question values at 0 to be replaced later on
     let testBox = document.createElement('div');
@@ -226,7 +267,7 @@ let main = document.getElementsByTagName( 'main' )[0];
     main.appendChild(nextButton);
     nextButton.addEventListener('click', nextQuestion);
 
-     showResults();
+     //showResults();
 
 // NOTES
 // compiler throws a ReferenceError for likertScaleValue when called in refreshQuestions()
