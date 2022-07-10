@@ -76,7 +76,10 @@ function nextQuestion() {
         refreshQuestions();
     } else {
         console.log('there is no next question');
-        if(!isChecked) showResults();
+        if(!isChecked) {
+            hideTest();
+            showResults();
+        }
     }
 }
 
@@ -125,6 +128,12 @@ function submitAnswer() {
     }
 
     console.log(scores);
+}
+
+function hideTest() {
+    testBox.style.display = 'none';
+    prevButton.style.display = 'none';
+    nextButton.style.display = 'none';
 }
 
 function showResults() {
@@ -244,6 +253,7 @@ let main = document.getElementsByTagName( 'main' )[0];
     // initializing question values at 0 to be replaced later on
     let testBox = document.createElement('div');
     testBox.className = 'test-box';
+    testBox.style.display = 'block';
     main.appendChild(testBox);
 
     let itemBox = document.createElement('div');

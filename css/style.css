@@ -109,6 +109,7 @@ button[value='next'] {
 
 .test-box {
     margin: auto auto 3em auto;
+    display: block;
 }
 
 .item-box {
