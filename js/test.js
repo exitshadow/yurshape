@@ -70,8 +70,8 @@ function previousQuestion() {
 
 function nextQuestion() {
     if (currentItem < ipip_scale_fr.length - 1) {
-        currentItem++;
         submitAnswer();
+        currentItem++;
         refreshQuestions();
     } else {
         console.log('there is no next question');
