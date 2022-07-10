@@ -186,17 +186,23 @@ button[value='next'] {
 .results-box {
     width: 60em;
     margin: 16em auto 8em auto;
-    padding: 2em 6em 6em 6em;
+    padding: 2em 6em 4em 6em;
     background-color: #f3df9c;
     border-radius: 2em;
 }
 
-.results-box .dominant-trait-desc {
-    margin-bottom: 2em;
+.results-box {
+    text-align: center;
 }
 
 .results-box h2 {
     display: block;
+    text-align: left;
+}
+
+.results-box .dominant-trait-desc {
+    text-align: left;
+    margin-bottom: 4em;
 }
 
 .results-box canvas {
@@ -210,10 +216,45 @@ button[value='next'] {
     transform: translateY(-10em);
 }
 
+
 .results-box .scale1 {
     width: 12em;
     display: inline-block;
     font-weight: bold;
+    margin-right: 2em;
+    margin-bottom: 2em;
+}
+
+.scale-bar-behind {
+    margin-top: .5em;
+    background-color: rgba(250, 235, 215, 0.596);
+    border-radius: .5em;
+}
+
+.scale-bar-front {
+    background-color: #7b2ea8;
+    border-radius: .5em;
+    transform: translateY(-8px);
+}
+
+.extraversion {
+    background-color:#ffee00;
+}
+
+.agreeableness {
+    background-color: #ff77b0;
+}
+
+.consciousness {
+    background-color: #9aff60;
+}
+
+.neuroticism {
+    background-color: #6d73c9;
+}
+
+.openness {
+    background-color: #c71d80;
 }
 
 .results-box .scale2 {

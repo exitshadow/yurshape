@@ -200,10 +200,24 @@ function showResults() {
 
     // display details
     for (const key in scores) {
+
         const scale1 = document.createElement('div');
         scale1.innerHTML = key.toString() + " : " + scores[key].totalScore;
         scale1.className = 'scale1';
         results.appendChild(scale1);
+
+        const scale1Bar = document.createElement('div');
+        scale1Bar.style.height = '8px';
+        scale1Bar.style.width = "100%";
+        scale1Bar.className = 'scale-bar-behind';
+        scale1.appendChild(scale1Bar);
+
+        const scale1BarResult = document.createElement('div');
+        scale1BarResult.style.height = scale1Bar.style.height;
+        scale1BarResult.style.width = `${(scores[key].totalScore * 2)}%`;
+        scale1BarResult.className = 'scale-bar-front ' + key.toString();
+        scale1.appendChild(scale1BarResult);
+
         for (const innerKey in scores[key]) {
             if (innerKey != 'totalScore') {
                 scale2 = document.createElement('div');
