@@ -16,9 +16,9 @@
     <script src="data/ocean_desc_fr.js"></script>
     <script src="js/test.js"></script>
     <script id="vertex-shader-2d" type="notjs">
-        attribute vec4 a;
+        attribute vec4 a_position;
         void main() {
-            gl_Position = a;
+            gl_Position = a_position;
         }
     </script>
     <script id="fragment-shader-2d" type="notjs">

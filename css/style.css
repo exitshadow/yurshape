@@ -208,7 +208,8 @@ button[value='next'] {
 
 .results-box canvas {
     display: block;
-    background-color: #7b2ea8;
+    border-style: solid;
+    border-color:#fda085;
     clear: both;
     margin: auto auto -10em auto;
     width: 25em;

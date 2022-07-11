@@ -59,6 +59,9 @@ let scores = {
     }
 }
 
+// gl
+var glCanvas;
+
 // functions
 
 function previousQuestion() {
@@ -81,7 +84,7 @@ function nextQuestion() {
             hideTest();
             calculateResults();
             showResults();
-            glRender();
+            glInit(glCanvas);
         }
     }
 }
@@ -176,7 +179,7 @@ function showResults() {
     results.className = 'results-box';
     main.appendChild(results);
 
-    const glCanvas = document.createElement('canvas');
+    glCanvas = document.createElement('canvas');
     glCanvas.id = 'glCanvas';
     glCanvas.width = '600';
     glCanvas.height = '600';
