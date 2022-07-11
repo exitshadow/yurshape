@@ -32,6 +32,7 @@ let test_version;
 let scale2;
 let currentItem = 0;
 let value;
+let highestScore = 0;
 let isChecked = false;
 
 // scores with subscales represented by attributes
@@ -80,6 +81,7 @@ function nextQuestion() {
             hideTest();
             calculateResults();
             showResults();
+            glRender();
         }
     }
 }
@@ -157,7 +159,6 @@ function calculateResults() {
     scores.openness.intellect + scores.openness.imagination;
 
     // set highest score
-    let highestScore = 0;
     for (const key in scores) {
         for (const innerKey in scores[key]) {
             if (innerKey == 'totalScore') {
