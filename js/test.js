@@ -78,6 +78,7 @@ function nextQuestion() {
         console.log('there is no next question');
         if(!isChecked) {
             hideTest();
+            calculateResults();
             showResults();
         }
     }
@@ -136,21 +137,7 @@ function hideTest() {
     nextButton.style.display = 'none';
 }
 
-function showResults() {
-    const results = document.createElement('div');
-    results.className = 'results-box';
-    main.appendChild(results);
-
-    const glCanvas = document.createElement('canvas');
-    glCanvas.id = 'glCanvas';
-    glCanvas.width = '600';
-    glCanvas.height = '600';
-    results.appendChild(glCanvas);
-
-    const resultsTitle = document.createElement('h2');
-    resultsTitle.innerHTML = 'your results';
-    results.appendChild(resultsTitle);
-
+function calculateResults() {
     // show dominant trait
     // sort by score
 
@@ -164,7 +151,7 @@ function showResults() {
     scores.consciousness.industriousness + scores.consciousness.orderliness;
 
     scores.neuroticism.totalScore =
-    scores.neuroticism.volatility + scores.neuroticism.volatility;
+    scores.neuroticism.volatility + scores.neuroticism.withdrawal;
 
     scores.openness.totalScore =
     scores.openness.intellect + scores.openness.imagination;
@@ -180,11 +167,29 @@ function showResults() {
             }
         }
     }
+}
 
+function showResults() {
+    //boilerplates the div where results will be shown
+    const results = document.createElement('div');
+    results.className = 'results-box';
+    main.appendChild(results);
+
+    const glCanvas = document.createElement('canvas');
+    glCanvas.id = 'glCanvas';
+    glCanvas.width = '600';
+    glCanvas.height = '600';
+    results.appendChild(glCanvas);
+
+    const resultsTitle = document.createElement('h2');
+    resultsTitle.innerHTML = 'your results';
+    results.appendChild(resultsTitle);
+
+    // picks dominant trait and displays it as a title
     let dominantTrait;
     let dominantTraitBox;
-    // this is a bit strange, without the stopping boolean it
-    // checks the equality 3 times ?!
+        // this is a bit strange, without the stopping boolean it
+        // checks the equality 3 times ?!
     for (const key in scores) {
         for (const innerKey in scores[key]) {
             console.log(scores[key].totalScore);
@@ -199,6 +204,7 @@ function showResults() {
         }
     }
 
+    // displays description for dominant trait
     for (const key in results_desc) {
         if (key == dominantTrait) {
             const dominantDesc = document.createElement('p');
@@ -207,7 +213,7 @@ function showResults() {
         }
     }
 
-    // display details
+    // display scoring bars
     for (const key in scores) {
 
         const scale1 = document.createElement('div');
