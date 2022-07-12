@@ -7,7 +7,6 @@
 
 // data
 
-const ipip_scale_fr = items_fr.ipip_scale_fr;
 const bfas_scale_fr = items_fr.bfas_scoring_keys;
 const likert_scale_fr = [
     "Pas du tout d'accord",
@@ -27,10 +26,19 @@ const results_desc = ocean_desc_fr;
 
 // settings & initializers
 
-let lang;
-let test_version;
-let scale2;
+let lang = 'fr';
+let shortVersion = false;
+
+let test;
+
+if (lang === 'fr') {
+    if (shortVersion) test = items_fr.ipip_scale_fr;
+    else test = items_fr.bfas_scoring_keys;
+}
+else test = items_fr.ipip_scale_fr; // to be changed
+
 let currentItem = 0;
+
 let value;
 let highestScore = 0;
 let isChecked = false;
@@ -59,10 +67,19 @@ let scores = {
     }
 }
 
+let bufferScores = [];
+
 // gl
 var glCanvas;
 
+
 // functions
+
+// would be nice to have
+function toggleLanguage() {
+    if(lang === 'fr') lang = 'en';
+    else lang = 'fr';
+}
 
 function previousQuestion() {
     if (currentItem > 0) {
@@ -74,7 +91,7 @@ function previousQuestion() {
 }
 
 function nextQuestion() {
-    if (currentItem < ipip_scale_fr.length - 1) {
+    if (currentItem < test.length - 1) {
         submitAnswer();
         currentItem++;
         refreshQuestions();
@@ -101,30 +118,49 @@ function submitAnswer() {
     };
 
     // TODO assign score to arrays istead of hard coding it in scores
+        // store answer at index currentItem
     // and use a damn switch case
     let score;
-    if (ipip_scale_fr[currentItem].key) score = value;
+    if (test[currentItem].key) score = value;
     else score = likert_scale_en.length - value;
 
-    if (ipip_scale_fr[currentItem].scale == 1) {
-        if (ipip_scale_fr[currentItem].subscale == 1) scores.extraversion.enthusiasm += score;
-        if (ipip_scale_fr[currentItem].subscale == 2) scores.extraversion.assertiveness += score;
+    bufferScores.push(score);
 
-    } else if (ipip_scale_fr[currentItem].scale == 2) {
-        if (ipip_scale_fr[currentItem].subscale == 1) scores.agreeableness.compassion += score;
-        if (ipip_scale_fr[currentItem].subscale == 2) scores.agreeableness.politeness += score;
+    switch (test[currentItem].scale) {
+        case 1:
+            
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+        case 4:
+            break;
+        case 5:
+            break;
+        default:
+            break;
+    }
 
-    } else if (ipip_scale_fr[currentItem].scale == 3) {
-        if (ipip_scale_fr[currentItem].subscale == 1) scores.consciousness.industriousness += score;
-        if (ipip_scale_fr[currentItem].subscale == 2) scores.consciousness.orderliness += score;
+    if (test[currentItem].scale == 1) {
+        if (test[currentItem].subscale == 1) scores.extraversion.enthusiasm += score;
+        if (test[currentItem].subscale == 2) scores.extraversion.assertiveness += score;
 
-    } else if (ipip_scale_fr[currentItem].scale == 4) {
-        if (ipip_scale_fr[currentItem].subscale == 1) scores.neuroticism.volatility += score;
-        if (ipip_scale_fr[currentItem].subscale == 2) scores.neuroticism.withdrawal += score;
+    } else if (test[currentItem].scale == 2) {
+        if (test[currentItem].subscale == 1) scores.agreeableness.compassion += score;
+        if (test[currentItem].subscale == 2) scores.agreeableness.politeness += score;
 
-    } else if (ipip_scale_fr[currentItem].scale == 5) {
-        if (ipip_scale_fr[currentItem].subscale == 1) scores.openness.intellect += score;
-        if (ipip_scale_fr[currentItem].subscale == 2) scores.openness.imagination += score;
+    } else if (test[currentItem].scale == 3) {
+        if (test[currentItem].subscale == 1) scores.consciousness.industriousness += score;
+        if (test[currentItem].subscale == 2) scores.consciousness.orderliness += score;
+
+    } else if (test[currentItem].scale == 4) {
+        if (test[currentItem].subscale == 1) scores.neuroticism.volatility += score;
+        if (test[currentItem].subscale == 2) scores.neuroticism.withdrawal += score;
+
+    } else if (test[currentItem].scale == 5) {
+        if (test[currentItem].subscale == 1) scores.openness.intellect += score;
+        if (test[currentItem].subscale == 2) scores.openness.imagination += score;
     }
 
     console.log(scores);
@@ -133,7 +169,7 @@ function submitAnswer() {
 function refreshQuestions() {
     itemBox.id = "item-" + (currentItem +1);
     itemIndicator.innerHTML = "Item n° " + (currentItem + 1);
-    itemContent.innerHTML = ipip_scale_fr[currentItem].content;
+    itemContent.innerHTML = test[currentItem].content;
 }
 
 function hideTest() {
@@ -219,6 +255,10 @@ function showResults() {
         }
     }
 
+    let factor;
+    if (shortVersion) factor = 2;
+    else factor = 1;
+
     // display scoring bars
     for (const key in scores) {
 
@@ -233,7 +273,7 @@ function showResults() {
             
         const scale1BarResult = document.createElement('div');
             scale1BarResult.style.height = scale1Bar.style.height;
-            scale1BarResult.style.width = `${(scores[key].totalScore * 2)}%`;
+            scale1BarResult.style.width = `${(scores[key].totalScore * factor)}%`;
             scale1BarResult.className = 'scale-bar-front ' + key.toString();
             
         results.appendChild(scale1);
@@ -242,7 +282,7 @@ function showResults() {
 
         for (const innerKey in scores[key]) {
             if (innerKey != 'totalScore') {
-                scale2 = document.createElement('div');
+                const scale2 = document.createElement('div');
                     scale2.innerHTML = `<p><span class="scale2-def">${innerKey.toString()} :</span> ${scores[key][innerKey]}</p>`;
                     scale2.className = 'scale2';
                 
@@ -275,7 +315,7 @@ let main = document.getElementsByTagName( 'main' )[0];
         itemIndicator.innerHTML = "Item n° " + (currentItem + 1);
         
     const itemContent = document.createElement('p');
-        itemContent.innerHTML = ipip_scale_fr[currentItem].content;
+        itemContent.innerHTML = test[currentItem].content;
         itemContent.className = "item-content";
         
     const answersBox = document.createElement('div');
