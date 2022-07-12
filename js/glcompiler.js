@@ -4,7 +4,7 @@ var positions = [
     .7, 0
 ];
 
-function glInit(glCanvas) {
+function glCanvasInit() {
     //let glCanvas = document.getElementById('glCanvas');
     var gl = glCanvas.getContext("webgl");
     if (!gl) {

@@ -82,20 +82,13 @@ function nextQuestion() {
         console.log('there is no next question');
         if(!isChecked) {
             hideTest();
-            calculateResults();
+            calculateTotalScore();
             showResults();
-            glInit(glCanvas);
+            glCanvasInit();
         }
     }
 }
 
-function refreshQuestions() {
-    itemBox.id = "item-" + (currentItem +1);
-    itemIndicator.innerHTML = "Item n° " + (currentItem + 1);
-    itemContent.innerHTML = ipip_scale_fr[currentItem].content;
-}
-
-// this works as expected
 function submitAnswer() {
     const radioButtons = document.querySelectorAll('input[name="likert"]');
     console.log(radioButtons);
@@ -104,10 +97,11 @@ function submitAnswer() {
         if (radioButton.checked) {
             value = Number(radioButton.value);
             console.log(value);
-            // this works
         }
     };
 
+    // TODO assign score to arrays istead of hard coding it in scores
+    // and use a damn switch case
     let score;
     if (ipip_scale_fr[currentItem].key) score = value;
     else score = likert_scale_en.length - value;
@@ -136,13 +130,19 @@ function submitAnswer() {
     console.log(scores);
 }
 
+function refreshQuestions() {
+    itemBox.id = "item-" + (currentItem +1);
+    itemIndicator.innerHTML = "Item n° " + (currentItem + 1);
+    itemContent.innerHTML = ipip_scale_fr[currentItem].content;
+}
+
 function hideTest() {
     testBox.style.display = 'none';
     prevButton.style.display = 'none';
     nextButton.style.display = 'none';
 }
 
-function calculateResults() {
+function calculateTotalScore() {
     // show dominant trait
     // sort by score
 
@@ -176,17 +176,18 @@ function calculateResults() {
 function showResults() {
     //boilerplates the div where results will be shown
     const results = document.createElement('div');
-    results.className = 'results-box';
-    main.appendChild(results);
-
+        results.className = 'results-box';
+        
     glCanvas = document.createElement('canvas');
-    glCanvas.id = 'glCanvas';
-    glCanvas.width = '600';
-    glCanvas.height = '600';
-    results.appendChild(glCanvas);
-
+        glCanvas.id = 'glCanvas';
+        glCanvas.width = '600';
+        glCanvas.height = '600';
+        
     const resultsTitle = document.createElement('h2');
-    resultsTitle.innerHTML = 'your results';
+        resultsTitle.innerHTML = 'your results';
+        
+    main.appendChild(results);
+    results.appendChild(glCanvas);
     results.appendChild(resultsTitle);
 
     // picks dominant trait and displays it as a title
@@ -212,8 +213,9 @@ function showResults() {
     for (const key in results_desc) {
         if (key == dominantTrait) {
             const dominantDesc = document.createElement('p');
-            dominantDesc.innerHTML = results_desc[key];
-            dominantTraitBox.appendChild(dominantDesc);
+                dominantDesc.innerHTML = results_desc[key];
+            
+                dominantTraitBox.appendChild(dominantDesc);
         }
     }
 
@@ -221,100 +223,100 @@ function showResults() {
     for (const key in scores) {
 
         const scale1 = document.createElement('div');
-        scale1.innerHTML = key.toString() + " : " + scores[key].totalScore;
-        scale1.className = 'scale1';
-        results.appendChild(scale1);
-
+            scale1.innerHTML = key.toString() + " : " + scores[key].totalScore;
+            scale1.className = 'scale1';
+            
         const scale1Bar = document.createElement('div');
-        scale1Bar.style.height = '8px';
-        scale1Bar.style.width = "100%";
-        scale1Bar.className = 'scale-bar-behind';
-        scale1.appendChild(scale1Bar);
-
+            scale1Bar.style.height = '8px';
+            scale1Bar.style.width = "100%";
+            scale1Bar.className = 'scale-bar-behind';
+            
         const scale1BarResult = document.createElement('div');
-        scale1BarResult.style.height = scale1Bar.style.height;
-        scale1BarResult.style.width = `${(scores[key].totalScore * 2)}%`;
-        scale1BarResult.className = 'scale-bar-front ' + key.toString();
+            scale1BarResult.style.height = scale1Bar.style.height;
+            scale1BarResult.style.width = `${(scores[key].totalScore * 2)}%`;
+            scale1BarResult.className = 'scale-bar-front ' + key.toString();
+            
+        results.appendChild(scale1);
+        scale1.appendChild(scale1Bar);
         scale1.appendChild(scale1BarResult);
 
         for (const innerKey in scores[key]) {
             if (innerKey != 'totalScore') {
                 scale2 = document.createElement('div');
-                scale2.innerHTML = innerKey.toString() + " : " + scores[key][innerKey] + " ";
-                scale2.className = 'scale2';
+                    scale2.innerHTML = innerKey.toString() + " : " + scores[key][innerKey] + " ";
+                    scale2.className = 'scale2';
+                
                 scale1.appendChild(scale2);
             }
         }
     }
 }
 
-// structure
+// drawing the content
 
 let main = document.getElementsByTagName( 'main' )[0];
 
     const prevButton = document.createElement('button');
-    prevButton.type = 'button';
-    prevButton.innerHTML = 'previous';
-    prevButton.value = 'previous'
-    main.appendChild(prevButton);
-    prevButton.addEventListener('click', previousQuestion);
-
-    // main div p .question-item
-    // initializing question values at 0 to be replaced later on
-    let testBox = document.createElement('div');
-    testBox.className = 'test-box';
-    testBox.style.display = 'block';
-    main.appendChild(testBox);
-
-    let itemBox = document.createElement('div');
-    itemBox.id = "item-" + (currentItem + 1);
-    itemBox.className = "item-box";
-
-    let itemIndicator = document.createElement('p');
-    itemIndicator.className = "item-tab";
-    itemIndicator.innerHTML = "Item n° " + (currentItem + 1);
-
-    let itemContent = document.createElement('p');
-    itemContent.innerHTML = ipip_scale_fr[currentItem].content;
-    itemContent.className = "item-content";
-
-    let answersBox = document.createElement('div');
-    answersBox.className = 'answers-box';
-
-    testBox.appendChild(itemBox);
-    testBox.appendChild(answersBox);
-    itemBox.appendChild(itemIndicator);
-    itemBox.appendChild(itemContent);
-
+        prevButton.type = 'button';
+        prevButton.innerHTML = 'previous';
+        prevButton.value = 'previous'
+        prevButton.addEventListener('click', previousQuestion);
+        
+    const testBox = document.createElement('div');
+        testBox.className = 'test-box';
+        testBox.style.display = 'block';
+        
+    const itemBox = document.createElement('div');
+        itemBox.id = "item-" + (currentItem + 1);
+        itemBox.className = "item-box";
+        
+    const itemIndicator = document.createElement('p');
+        itemIndicator.className = "item-tab";
+        itemIndicator.innerHTML = "Item n° " + (currentItem + 1);
+        
+    const itemContent = document.createElement('p');
+        itemContent.innerHTML = ipip_scale_fr[currentItem].content;
+        itemContent.className = "item-content";
+        
+    const answersBox = document.createElement('div');
+        answersBox.className = 'answers-box';
+        
+        main.appendChild(prevButton);
+        main.appendChild(testBox);
+        
+        testBox.appendChild(itemBox);
+        testBox.appendChild(answersBox);
+        itemBox.appendChild(itemIndicator);
+        itemBox.appendChild(itemContent);
+        
 
         // laying likert scale answers out
 
-        for (let i = 0; i < likert_scale_fr.length; i++) {
-            const answerBlock = document.createElement('div');
+    for (let i = 0; i < likert_scale_fr.length; i++) {
+        const answerBlock = document.createElement('div');
             answerBlock.className = 'single-answer-box';
-
-            const likertScaleText = document.createElement('p');
-            likertScaleText.innerHTML = likert_scale_fr[i];
-            likertScaleText.id = "answer-" + (i + 1);
 
             const likertScaleValue = document.createElement('input');
             likertScaleValue.type = 'radio';
             likertScaleValue.name = 'likert';
             likertScaleValue.value = i + 1;
 
-            answersBox.appendChild(answerBlock);
-            answerBlock.appendChild(likertScaleValue);
-            answerBlock.appendChild(likertScaleText);
-        }
+            const likertScaleText = document.createElement('p');
+                likertScaleText.innerHTML = likert_scale_fr[i];
+                likertScaleText.id = "answer-" + (i + 1);
 
-    
+        answersBox.appendChild(answerBlock);
+        answerBlock.appendChild(likertScaleValue);
+        answerBlock.appendChild(likertScaleText);
+    }
 
     const nextButton = document.createElement('button');
-    nextButton.type = 'button';
-    nextButton.innerHTML = 'next';
-    nextButton.value = 'next';
+        nextButton.type = 'button';
+        nextButton.innerHTML = 'next';
+        nextButton.value = 'next';
+        nextButton.addEventListener('click', nextQuestion);
+
     main.appendChild(nextButton);
-    nextButton.addEventListener('click', nextQuestion);
 
      //showResults();
 
