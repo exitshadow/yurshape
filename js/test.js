@@ -201,7 +201,7 @@ function showResults() {
             if (highestScore == scores[key].totalScore && !isChecked) {
                 dominantTrait = key;
                 dominantTraitBox = document.createElement('div');
-                dominantTraitBox.innerHTML = `your dominant trait is ${key.toString()}`;
+                dominantTraitBox.innerHTML = `<p>your dominant trait is <span class="dominant-trait">${key.toString()}</span></p>`;
                 dominantTraitBox.className = 'dominant-trait-desc';
                 results.appendChild(dominantTraitBox);
                 isChecked = true;
@@ -223,7 +223,7 @@ function showResults() {
     for (const key in scores) {
 
         const scale1 = document.createElement('div');
-            scale1.innerHTML = key.toString() + " : " + scores[key].totalScore;
+            scale1.innerHTML = `<p><span class="scale1-def">${key.toString()} :</span> ${scores[key].totalScore}</p>`;
             scale1.className = 'scale1';
             
         const scale1Bar = document.createElement('div');
@@ -243,7 +243,7 @@ function showResults() {
         for (const innerKey in scores[key]) {
             if (innerKey != 'totalScore') {
                 scale2 = document.createElement('div');
-                    scale2.innerHTML = innerKey.toString() + " : " + scores[key][innerKey] + " ";
+                    scale2.innerHTML = `<p><span class="scale2-def">${innerKey.toString()} :</span> ${scores[key][innerKey]}</p>`;
                     scale2.className = 'scale2';
                 
                 scale1.appendChild(scale2);
