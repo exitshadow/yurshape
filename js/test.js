@@ -27,7 +27,7 @@ const results_desc = ocean_desc_fr;
 // settings & initializers
 
 let lang = 'fr';
-let shortVersion = false;
+let shortVersion = true;
 
 let test;
 
@@ -358,7 +358,7 @@ let main = document.getElementsByTagName( 'main' )[0];
 
     main.appendChild(nextButton);
 
-     //showResults();
+    //showResults();
 
 // NOTES
 // compiler throws a ReferenceError for likertScaleValue when called in refreshQuestions()

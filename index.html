@@ -3,6 +3,22 @@
         <title>yurshape</title>
         <link rel="stylesheet" href="css/style.css">
         <!--<script src="js/three/build/three.module.js"></script> !-->
+        <script src="data/ipip_items_fr.js" defer></script>
+        <script src="data/ocean_desc_fr.js" defer></script>
+        <script src="js/test.js" defer></script>
+        <script id="vertex-shader-2d" type="vert" defer>
+            attribute vec4 a_position;
+            void main() {
+                gl_Position = a_position;
+            }
+        </script>
+        <script id="fragment-shader-2d" type="frag" defer>
+            precision mediump float;
+            void main() {
+                gl_FragColor = vec4(1,.5,0,1);
+            }
+        </script>
+        <script src="js/glcompiler.js" defer></script>
     </head>
     <body>
         <header>
@@ -12,20 +28,4 @@
         <main>
         </main>
     </body>
-    <script src="data/ipip_items_fr.js"></script>
-    <script src="data/ocean_desc_fr.js"></script>
-    <script src="js/test.js"></script>
-    <script id="vertex-shader-2d" type="notjs">
-        attribute vec4 a_position;
-        void main() {
-            gl_Position = a_position;
-        }
-    </script>
-    <script id="fragment-shader-2d" type="notjs">
-        precision mediump float;
-        void main() {
-            gl_FragColor = vec4(1,.5,0,1);
-        }
-    </script>
-    <script src="js/glcompiler.js"></script>
 </html>
